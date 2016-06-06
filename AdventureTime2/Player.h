@@ -9,15 +9,17 @@ namespace AdventureTime {
 	{
 	private:
 		std::string playerName;
-		std::vector<Item> Inventory;
+		std::vector<int> inventory;
+		std::vector<int> equipped;
 		int currentRoom;
 	public:
 		Player();
-		~Player();
+		~Player() = default;
 		void setPlayerName(const std::string s);
 		void setCurrentRoom(int e);
-		int getCurrentRoom();
-		void addItem(Item item);
-		void removeItem(Item item);
+		int getCurrentRoom() const;
+		void addItem(int id);
+		void removeItem(int id);
+		std::vector<int> getItems() const;
 	};
 }

@@ -2,20 +2,22 @@
 #include <string>
 #include <vector>
 #include <atomic>
+#include <iostream>
 
 namespace AdventureTime {
 	class Item {
 	private:
 		const int id;
-		int quality;
-		int price;
-		std::string description;
+		const std::string type;
 	public:
-		Item(int quality, int price, std::string description);
-		~Item();
-		std::string getDescription() const;
-		virtual void use();
+		Item(std::string type, std::string && description);
+		virtual ~Item() = default;
+		virtual std::string getDescription() const;
+		virtual void use() = 0;
+		int getId() const;
+		std::string getType() const;
 	protected:
 		static std::atomic<int> s_id;
+		std::string description;
 	};
 }

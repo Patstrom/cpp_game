@@ -2,20 +2,22 @@
 
 std::atomic<int> AdventureTime::Item::s_id;
 
-AdventureTime::Item::Item(int quality, int price, std::string description) :
+AdventureTime::Item::Item(std::string type, std::string && description) :
 id(++s_id),
-quality(quality),
-price(price),
+type(type),
 description(description)
 {
 }
 
-AdventureTime::Item::~Item()
-{
 
+int AdventureTime::Item::getId() const {
+	return id;
 }
 
-void AdventureTime::Item::use()
-{
+std::string AdventureTime::Item::getType() const{
+	return type;
+}
 
+std::string AdventureTime::Item::getDescription() const {
+	return description;
 }

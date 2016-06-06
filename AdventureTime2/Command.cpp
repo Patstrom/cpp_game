@@ -7,10 +7,10 @@ secondWord(second)
 {
 }
 
-AdventureTime::Command::~Command()
-{
+AdventureTime::Command::~Command() {
 
 }
+
 
 const std::string AdventureTime::Command::getCommandWord() const
 {

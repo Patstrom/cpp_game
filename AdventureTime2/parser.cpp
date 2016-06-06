@@ -2,13 +2,9 @@
 
 AdventureTime::parser::parser()
 {
-	valid_commands = { "help", "go", "quit" };
+	valid_commands = { "help", "go", "pick", "use", "inventory", "quit" };
 }
 
-AdventureTime::parser::~parser()
-{
-
-}
 
 AdventureTime::Command AdventureTime::parser::getCommand()
 {

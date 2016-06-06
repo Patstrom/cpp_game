@@ -2,7 +2,7 @@
 
 std::atomic<int> AdventureTime::Environment::s_id;
 
-AdventureTime::Environment::Environment(std::string & desc) :
+AdventureTime::Environment::Environment(std::string && desc) :
 id(++s_id),
 description(desc)
 {
@@ -13,14 +13,14 @@ std::string AdventureTime::Environment::getDescription() const
 	return description;
 }
 
-void AdventureTime::Environment::removeItem(Item item)
+void AdventureTime::Environment::removeItem(int item)
 {
-
+	items.erase(std::remove(items.begin(), items.end(), item), items.end());
 }
 
-void AdventureTime::Environment::addItem(Item item)
+void AdventureTime::Environment::addItem(int item)
 {
-
+	items.push_back(item);
 }
 
 int AdventureTime::Environment::getID() const
@@ -38,6 +38,10 @@ void AdventureTime::Environment::printDirections()
 	for (auto it = directions.begin(); it != directions.end(); it++) {
 		std::cout << it -> first << " ";
 	}
+}
+
+std::vector<int> AdventureTime::Environment::getItems() {
+	return items;
 }
 
 int AdventureTime::Environment::getNextRoom(const std::string direction)

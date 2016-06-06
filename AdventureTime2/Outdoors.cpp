@@ -3,8 +3,8 @@
 #include "Outdoors.h"
 
 
-AdventureTime::Outdoors::Outdoors(std::string & description, int chance_of_rain) :
-Environment(description)
+AdventureTime::Outdoors::Outdoors(std::string && description, int chance_of_rain) :
+Environment(std::move(description))
 {
 	if (chance_of_rain < 0 || chance_of_rain > 100) {
 		throw std::invalid_argument("chance_of_rain not between 0 or 100");
@@ -14,9 +14,6 @@ Environment(description)
 	}
 }
 
-AdventureTime::Outdoors::~Outdoors() {
-
-}
 
 std::string AdventureTime::Outdoors::getDescription() const {
 	srand(time(NULL));
@@ -31,6 +28,3 @@ std::string AdventureTime::Outdoors::getDescription() const {
 	}
 }
 
-const bool AdventureTime::Outdoors::isIndoors() const {
-	return false;
-}

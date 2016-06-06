@@ -9,9 +9,7 @@ namespace AdventureTime {
 	private:
 		int chance_of_rain;
 	public:
-		Outdoors(std::string & description, int chance_of_rain);
-		~Outdoors();
+		Outdoors(std::string && description, int chance_of_rain);
 		virtual std::string getDescription() const;
-		virtual const bool isIndoors() const;
 	};
 }

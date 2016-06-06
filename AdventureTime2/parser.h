@@ -11,7 +11,7 @@ namespace AdventureTime {
 		std::vector<std::string> valid_commands;
 	public:
 		parser();
-		~parser();
+		~parser() = default;
 		Command getCommand();
 		void showCommands() const;
 	};
