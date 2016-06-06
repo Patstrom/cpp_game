@@ -7,7 +7,7 @@ namespace AdventureTime {
 		public Locked
 	{
 	public:
-		Indoors(std::string && description, int itemId);
+		Indoors(std::string && description, int itemId, bool equipped);
 		virtual std::string getDescription() const;
 	};
 }

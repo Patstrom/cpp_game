@@ -21,5 +21,8 @@ namespace AdventureTime {
 		void addItem(int id);
 		void removeItem(int id);
 		std::vector<int> getItems() const;
+		std::vector<int> getEquipped() const;
+		void equip(int id);
+		void unequip(int id);
 	};
 }

@@ -36,3 +36,21 @@ void AdventureTime::Player::removeItem(int item)
 std::vector<int> AdventureTime::Player::getItems() const {
 	return inventory;
 }
+
+std::vector<int> AdventureTime::Player::getEquipped() const {
+	return equipped;
+}
+
+void AdventureTime::Player::equip(int id) {
+	if (std::find(inventory.begin(), inventory.end(), id) != inventory.end()) {
+		equipped.push_back(id);
+		inventory.erase(std::remove(inventory.begin(), inventory.end(), id), inventory.end());
+	}
+	else {
+		std::cout << "Not in inventory";
+	}
+}
+
+void AdventureTime::Player::unequip(int id) {
+	equipped.erase(std::remove(equipped.begin(), equipped.end(), id), equipped.end());
+}

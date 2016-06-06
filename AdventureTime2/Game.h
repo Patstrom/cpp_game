@@ -21,6 +21,7 @@ namespace AdventureTime {
 		void pickUp(const Command & c);
 		std::vector<std::shared_ptr<Item>> findItems(std::vector<int> list);
 		void useItem(const Command & c);
+		void equipItem(const Command & c);
 		std::vector<std::shared_ptr<Environment>> environments;
 		std::vector<std::shared_ptr<Item>> items;
 	public:

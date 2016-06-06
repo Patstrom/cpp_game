@@ -1,6 +1,7 @@
 #pragma once	
 #include "Game.h"
 #include "Locked.h"
+#include "Wearable.h"
 
 void AdventureTime::Game::goToRoom(const Command & c)
 {
@@ -23,12 +24,29 @@ void AdventureTime::Game::goToRoom(const Command & c)
 	Environment & nextRoom = findRoom(nextRoomId);
 	//If room is locked
 	if (Locked * lockedRoom = dynamic_cast<Locked*>(&nextRoom)) {
+		if (lockedRoom->isUnlocked()) {
+			player.setCurrentRoom(nextRoomId);
+			std::cout << nextRoom.getDescription();
+			return;
+		}
 		auto key = lockedRoom->getItemId();
-		std::vector<std::shared_ptr<Item>> inventory = findItems(player.getItems());
-		for (auto it = inventory.begin(); it != inventory.end(); it++) {
+		std::vector<std::shared_ptr<Item>> items;
+		if (lockedRoom->needsEquipped()) {
+			items = findItems(player.getEquipped());
+		}
+		else {
+			items = findItems(player.getItems());
+		}
+		for (auto it = items.begin(); it != items.end(); it++) {
 			if ((*it)->getId() == key){
 				player.setCurrentRoom(nextRoomId);
-				player.removeItem(key);
+				lockedRoom->unlock();
+				if (lockedRoom->needsEquipped()) {
+					player.unequip(key);
+				}
+				else {
+					player.removeItem(key);
+				}
 				std::cout << nextRoom.getDescription();
 				return;
 			}
@@ -91,7 +109,7 @@ void AdventureTime::Game::useItem(const Command & c) {
 	if (!c.hasSecondWord()) {
 		std::cout << "Use what item?\n";
 		for (auto i : inventory) {
-			std::cout << i->getType();
+			std::cout << i->getType() << " ";
 		}
 		return;
 	}
@@ -107,6 +125,31 @@ void AdventureTime::Game::useItem(const Command & c) {
 			i->use();
 		}
 	}
+}
+
+void AdventureTime::Game::equipItem(const Command & c) {
+	auto inventory = findItems(player.getItems());
+
+	if (!c.hasSecondWord()) {
+		std::cout << "Which item?\n";
+		for (auto i : inventory) {
+			if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
+				std::cout << i->getType() << " ";
+			}
+		}
+		return;
+	}
+
+	std::string type = c.getSecondWord();
+	for (auto i : inventory) {
+		if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
+			int id = wearableItem->getId();
+			player.equip(id);
+			std::cout << "Successfully equipped!";
+			return;
+		}
+	}
+
 }
 
 bool AdventureTime::Game::processCommand(const Command & c)
@@ -132,8 +175,20 @@ bool AdventureTime::Game::processCommand(const Command & c)
 	else if (commandWord.compare("use") == 0) {
 		useItem(c);
 	}
+	else if (commandWord.compare("equip") == 0) {
+		equipItem(c);
+	}
 	else if (commandWord.compare("inventory") == 0) {
 		auto tmp = findItems(player.getItems());
+		for (auto t : tmp) {
+			std::cout << t->getType() << " ";
+		}
+	}
+	else if (commandWord.compare("equipped") == 0) {
+		auto tmp = findItems(player.getEquipped());
+		for (auto t : tmp) {
+			std::cout << t->getType() << " ";
+		}
 	}
 	else if (commandWord.compare("quit") == 0) {
 		std::cout << "Thank you come again!";

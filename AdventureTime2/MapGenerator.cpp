@@ -14,9 +14,9 @@ std::vector<std::shared_ptr<AdventureTime::Environment>> AdventureTime::MapGener
 	std::shared_ptr<Environment> park(new Outdoors(std::string("The park!!! :D"), 50));
 	std::shared_ptr<Environment> parkingLot(new Outdoors(std::string("The parking lot"), 10));
 	std::shared_ptr<Environment> lake(new Outdoors(std::string("The lake by the park"), 10));
-	std::shared_ptr<Environment> cafe(new Indoors(std::string("The cafeteria"), 1));
+	std::shared_ptr<Environment> cafe(new Indoors(std::string("The cafeteria"), 1, true));
 	std::shared_ptr<Environment> apartment(new Indoors(
-		std::string("You follow a residence into the apartment complex"), 2));
+		std::string("You follow a residence into the apartment complex"), 2, false));
 
 	park->addDirection("north", parkingLot->getID());
 	park->addDirection("south", lake->getID());

@@ -2,9 +2,9 @@
 #include "stdafx.h"
 #include "Indoors.h"
 
-AdventureTime::Indoors::Indoors(std::string && description, int itemId) : 
+AdventureTime::Indoors::Indoors(std::string && description, int itemId, bool equipped) : 
 Environment(std::move(description)),
-Locked(itemId)
+Locked(itemId, equipped)
 {
 }
 
