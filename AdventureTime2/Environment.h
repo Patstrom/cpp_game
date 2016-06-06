@@ -24,7 +24,7 @@ namespace AdventureTime {
 		void addItem(int item);
 		int getID() const;
 		void addDirection(std::string s, int ID);
-		void printDirections();
+		std::vector<std::string> getDirections() const;
 		std::vector<int> getItems();
 		int getNextRoom(const std::string direction);
 	};

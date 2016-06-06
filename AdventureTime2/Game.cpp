@@ -5,17 +5,17 @@
 
 void AdventureTime::Game::goToRoom(const Command & c)
 {
+	auto possibleDirections = findRoom(player.getCurrentRoom()).getDirections();
 	if (!c.hasSecondWord()) {
 		std::cout << "Where to?\n";
-		findRoom(player.getCurrentRoom()).printDirections();
+		for (auto t: possibleDirections) {
+			std::cout << t << " ";
+		}
 		return;
 	}
 
 	const std::string direction = c.getSecondWord();
-	if (direction.compare("north") &&
-		direction.compare("south") &&
-		direction.compare("west") &&
-		direction.compare("east")) {
+	if (std::find(possibleDirections.begin(), possibleDirections.end(), direction) == possibleDirections.end()) {
 		std::cout << "Invalid direction!\n";
 		return;
 	}

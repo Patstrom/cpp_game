@@ -33,11 +33,13 @@ void AdventureTime::Environment::addDirection(std::string s, int ID)
 	directions[s] = ID;
 }
 
-void AdventureTime::Environment::printDirections()
+std::vector<std::string> AdventureTime::Environment::getDirections() const
 {
+	std::vector<std::string> tmp;
 	for (auto it = directions.begin(); it != directions.end(); it++) {
-		std::cout << it -> first << " ";
+		tmp.push_back(it -> first);
 	}
+	return tmp;
 }
 
 std::vector<int> AdventureTime::Environment::getItems() {
