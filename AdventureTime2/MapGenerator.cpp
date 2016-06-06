@@ -1,16 +1,17 @@
 #include "MapGenerator.h"
 #include <string>
-#include "environments.h"
+#include "Outdoors.h"
+#include "Indoors.h"
 
 std::vector<AdventureTime::Environment> AdventureTime::MapGenerator::generate_environments()
 {
 	std::vector<Environment> tempList;
 
-	Park park(std::string("The park!!! :D"));
-	ParkingLot parkingLot(std::string("The parking lot"));
-	Lake lake(std::string("The lake by the park"));
-	Cafeteria cafe(std::string("The cafeteria"));
-	ApartmentComplex apartment(std::string("You follow a residence into the apartment complex"));
+	Outdoors park(std::string("The park!!! :D"), 10);
+	Outdoors parkingLot(std::string("The parking lot"), 10);
+	Outdoors lake(std::string("The lake by the park"), 10);
+	Indoors cafe(std::string("The cafeteria"));
+	Indoors apartment(std::string("You follow a residence into the apartment complex"));
 
 	park.addDirection("north", parkingLot.getID());
 	park.addDirection("south", lake.getID());

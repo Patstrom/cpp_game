@@ -9,17 +9,16 @@
 namespace AdventureTime {
 	class Environment {
 	private: 
-		int id;
-		std::string description;
+		const int id;
 		std::unordered_map<std::string, int> directions; 
 		std::vector<Item> items; 
 	protected:
 		static std::atomic<int> s_id;
+		std::string description;
 	public:
-		Environment();
 		Environment(std::string & description);
 		virtual ~Environment();
-		virtual std::string getDescription() const;
+		virtual std::string getDescription() const = 0;
 		void removeItem(Item item);
 		void addItem(Item item);
 		int getID() const;

@@ -8,10 +8,6 @@ description(desc)
 {
 }
 
-AdventureTime::Environment::Environment() :
-AdventureTime::Environment(std::string("N/A"))
-{
-}
 
 AdventureTime::Environment::~Environment()
 {

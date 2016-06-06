@@ -6,7 +6,7 @@
 namespace AdventureTime {
 	class Item {
 	private:
-		int id;
+		const int id;
 		int quality;
 		int price;
 		std::string description;
