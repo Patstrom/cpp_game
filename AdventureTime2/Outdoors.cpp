@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Outdoors.h"
-#include <ctime>
 
 
 AdventureTime::Outdoors::Outdoors(std::string & description, int chance_of_rain) :

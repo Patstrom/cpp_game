@@ -1,5 +1,6 @@
 #pragma once
 #include "Environment.h"
+#include <ctime>
 
 namespace AdventureTime {
 	class Outdoors :

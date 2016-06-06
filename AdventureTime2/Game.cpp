@@ -1,6 +1,5 @@
+#pragma once	
 #include "Game.h"
-#include <iostream>
-#include <string>
 
 void AdventureTime::Game::goToRoom(const Command c) 
 {

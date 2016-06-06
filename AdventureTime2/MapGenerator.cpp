@@ -1,6 +1,5 @@
 #pragma once
 #include "MapGenerator.h"
-#include <string>
 #include "Outdoors.h"
 #include "Indoors.h"
 

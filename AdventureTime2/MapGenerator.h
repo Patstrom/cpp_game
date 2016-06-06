@@ -1,6 +1,7 @@
 #pragma once
 #include "Environment.h"
 #include <memory>
+#include <string>
 
 namespace AdventureTime {
 	class MapGenerator

@@ -3,6 +3,8 @@
 #include "parser.h"
 #include "Player.h"
 #include <memory>
+#include <string>
+#include <iostream>
 
 
 namespace AdventureTime {
