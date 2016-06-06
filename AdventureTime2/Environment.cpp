@@ -8,12 +8,6 @@ description(desc)
 {
 }
 
-
-AdventureTime::Environment::~Environment()
-{
-
-}
-
 std::string AdventureTime::Environment::getDescription() const
 {
 	return description;

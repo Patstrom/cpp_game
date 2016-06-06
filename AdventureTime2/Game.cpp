@@ -19,8 +19,8 @@ void AdventureTime::Game::goToRoom(const Command c)
 AdventureTime::Environment & AdventureTime::Game::findRoom(int ID)
 {
 	for (auto it = environments.begin(); it != environments.end(); it++) {
-		if (it->getID() == ID)
-			return *it;
+		if ((*it)->getID() == ID)
+			return **it;
 	}
 }
 

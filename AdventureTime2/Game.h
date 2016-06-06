@@ -2,6 +2,7 @@
 #include "MapGenerator.h"
 #include "parser.h"
 #include "Player.h"
+#include <memory>
 
 
 namespace AdventureTime {
@@ -15,7 +16,7 @@ namespace AdventureTime {
 		bool processCommand(const Command c);
 		void goToRoom(const Command c);
 		Environment & findRoom(int ID);
-		std::vector<Environment> environments;
+		std::vector<std::shared_ptr<Environment>> environments;
 	public:
 		Game();
 		~Game();

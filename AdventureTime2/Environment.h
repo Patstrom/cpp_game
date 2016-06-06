@@ -17,8 +17,9 @@ namespace AdventureTime {
 		std::string description;
 	public:
 		Environment(std::string & description);
-		virtual ~Environment();
+		virtual ~Environment() = default;
 		virtual std::string getDescription() const = 0;
+		virtual const bool isIndoors() const = 0;
 		void removeItem(Item item);
 		void addItem(Item item);
 		int getID() const;

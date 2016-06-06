@@ -1,24 +1,25 @@
+#pragma once
 #include "MapGenerator.h"
 #include <string>
 #include "Outdoors.h"
 #include "Indoors.h"
 
-std::vector<AdventureTime::Environment> AdventureTime::MapGenerator::generate_environments()
+std::vector<std::shared_ptr<AdventureTime::Environment>> AdventureTime::MapGenerator::generate_environments()
 {
-	std::vector<Environment> tempList;
+	std::vector<std::shared_ptr<Environment>> tempList;
 
-	Outdoors park(std::string("The park!!! :D"), 10);
-	Outdoors parkingLot(std::string("The parking lot"), 10);
-	Outdoors lake(std::string("The lake by the park"), 10);
-	Indoors cafe(std::string("The cafeteria"));
-	Indoors apartment(std::string("You follow a residence into the apartment complex"));
+	std::shared_ptr<Environment> park(new Outdoors(std::string("The park!!! :D"), 10));
+	std::shared_ptr<Environment> parkingLot(new Outdoors(std::string("The parking lot"), 10));
+	std::shared_ptr<Environment> lake(new Outdoors(std::string("The lake by the park"), 10));
+	std::shared_ptr<Environment> cafe(new Indoors(std::string("The cafeteria")));
+	std::shared_ptr<Environment> apartment(new Indoors(std::string("You follow a residence into the apartment complex")));
 
-	park.addDirection("north", parkingLot.getID());
-	park.addDirection("south", lake.getID());
-	park.addDirection("west", parkingLot.getID());
-	park.addDirection("east", cafe.getID());
+	park->addDirection("north", parkingLot->getID());
+	park->addDirection("south", lake->getID());
+	park->addDirection("west", parkingLot->getID());
+	park->addDirection("east", cafe->getID());
 
-	parkingLot.addDirection("north", apartment.getID());
+	parkingLot->addDirection("north", apartment->getID());
 
 
 
@@ -50,7 +51,7 @@ AdventureTime::MapGenerator::~MapGenerator()
 
 }
 
-std::vector<AdventureTime::Environment> AdventureTime::MapGenerator::generate_map()
+std::vector<std::shared_ptr<AdventureTime::Environment>> AdventureTime::MapGenerator::generate_map()
 {
 	return generate_environments();
 }
