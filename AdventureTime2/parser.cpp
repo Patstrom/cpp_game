@@ -1,12 +1,12 @@
-#include "parser.h"
+#include "Parser.h"
 
-AdventureTime::parser::parser()
+AdventureTime::Parser::Parser()
 {
 	valid_commands = { "help", "go", "pick", "use", "equip", "inventory", "equipped", "quit" };
 }
 
 
-AdventureTime::Command AdventureTime::parser::getCommand()
+AdventureTime::Command AdventureTime::Parser::getCommand()
 {
 	std::string inputLine;
 	getline(std::cin, inputLine);
@@ -27,7 +27,7 @@ AdventureTime::Command AdventureTime::parser::getCommand()
 	return Command(cword, sword);
 }
 
-void AdventureTime::parser::showCommands() const
+void AdventureTime::Parser::showCommands() const
 {
 	for (auto i = valid_commands.begin(); i != valid_commands.end(); i++) {
 		std::cout << *i << " ";

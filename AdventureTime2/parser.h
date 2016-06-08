@@ -5,13 +5,13 @@
 #include <algorithm>
 
 namespace AdventureTime {
-	class parser
+	class Parser
 	{
 	private:
 		std::vector<std::string> valid_commands;
 	public:
-		parser();
-		~parser() = default;
+		Parser();
+		~Parser() = default;
 		Command getCommand();
 		void showCommands() const;
 	};

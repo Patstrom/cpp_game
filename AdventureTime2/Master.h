@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "Actor.h"
+#include <ctime>
 
 namespace AdventureTime {
 	class Master : 
