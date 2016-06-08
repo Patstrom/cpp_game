@@ -28,13 +28,13 @@ namespace AdventureTime {
 		int getID() const;
 		void addDirection(std::string s, std::weak_ptr<Environment> environment);
 		void printDirections() const;
-		std::vector<std::weak_ptr<Item>> getItems();
-		std::weak_ptr<Environment> getNextRoom(const std::string direction);
+		std::vector<std::weak_ptr<Item>> getItems() const;
+		std::weak_ptr<Environment> getNextRoom(const std::string direction) const;
 		bool hasDirection(const std::string direction) const;
 		std::vector<std::weak_ptr<Environment>> getNeighbors() const;
 		std::vector<std::string> getDirections() const;
 		void addActor(std::weak_ptr<Actor> actor);
-		std::vector<std::weak_ptr<Actor>> getActors();
+		std::vector<std::weak_ptr<Actor>> getActors() const;
 		void removeActor(std::weak_ptr<Actor> actor);
 	};
 }

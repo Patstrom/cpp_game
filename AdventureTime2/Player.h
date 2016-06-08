@@ -11,7 +11,6 @@ namespace AdventureTime {
 		public virtual Actor
 	{
 	private:
-		std::string playerName;
 		std::vector<std::weak_ptr<Item>> inventory;
 		std::vector<std::weak_ptr<Item>> equipped;
 		Parser parser;
@@ -23,7 +22,6 @@ namespace AdventureTime {
 		void showInventory() const;
 		void showEquipped() const;
 		void help() const;
-		void setPlayerName(const std::string s);
 		void addItem(std::weak_ptr<Item> item);
 		void removeItem(std::weak_ptr<Item> item);
 		std::vector<std::weak_ptr<Item>> getItems() const;

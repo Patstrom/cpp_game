@@ -44,13 +44,14 @@ std::vector<std::string> AdventureTime::Environment::getDirections() const
 	return tmp;
 }
 
-std::vector<std::weak_ptr<AdventureTime::Item>> AdventureTime::Environment::getItems() {
+std::vector<std::weak_ptr<AdventureTime::Item>> AdventureTime::Environment::getItems() const {
 	return items;
 }
 
-std::weak_ptr<AdventureTime::Environment> AdventureTime::Environment::getNextRoom(const std::string direction)
+std::weak_ptr<AdventureTime::Environment> AdventureTime::Environment::getNextRoom(const std::string direction) const
 {
-	return directions[direction];
+	std::unordered_map<std::string, std::weak_ptr<Environment>>::const_iterator iter = directions.find(direction);
+	return iter->second;
 }
 
 bool AdventureTime::Environment::hasDirection(const std::string direction) const
@@ -70,21 +71,13 @@ void AdventureTime::Environment::addActor(std::weak_ptr<AdventureTime::Actor> ac
 	actors.push_back(actor);
 }
 
-std::vector<std::weak_ptr<AdventureTime::Actor>> AdventureTime::Environment::getActors() {
+std::vector<std::weak_ptr<AdventureTime::Actor>> AdventureTime::Environment::getActors() const {
 	return actors;
 }
 
 void AdventureTime::Environment::removeActor(std::weak_ptr<AdventureTime::Actor> actor) {
-	//actors.erase(std::remove(actors.begin(), actors.end(), actor), actors.end());
 	actors.erase(std::remove_if(actors.begin(), actors.end(), 
 		[actor] (std::weak_ptr<Actor> otherActor) {return actor.lock() == otherActor.lock();}), actors.end());
-	/*for (auto it = actors.begin(); it != actors.end(); ++it)
-	{
-		if (it->lock() == actor.lock()) {
-			actors.erase(it);
-			return;
-		}
-	}*/
 }
 
 void AdventureTime::Environment::printDirections() const {

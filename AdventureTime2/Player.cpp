@@ -7,12 +7,6 @@ AdventureTime::Player::Player() : Actor("You")
 {
 }
 
-
-void AdventureTime::Player::setPlayerName(const std::string s)
-{
-	playerName = s;
-}
-
 void AdventureTime::Player::addItem(std::weak_ptr<AdventureTime::Item> item)
 {
 	inventory.push_back(item);
