@@ -9,8 +9,8 @@ void AdventureTime::Master::act() {
 	srand(time(NULL));
 	int i = (std::rand() % 3);
 	if (i == WALK) {
-		std::vector<std::shared_ptr<Environment>> neighbors = currentRoom->getNeighbors();
-		std::shared_ptr<Environment> nextRoom = neighbors[(std::rand() % neighbors.size())];
+		std::vector<std::weak_ptr<Environment>> neighbors = currentRoom.lock()->getNeighbors();
+		std::shared_ptr<Environment> nextRoom = (neighbors[(std::rand() % neighbors.size())]).lock();
 		setCurrentRoom(nextRoom);
 	} else { // Do nothing
 

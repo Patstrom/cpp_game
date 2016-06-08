@@ -13,13 +13,13 @@ namespace AdventureTime {
 	protected:
 		std::string name;
 		bool finished;
-		std::shared_ptr<Environment> currentRoom;
+		std::weak_ptr<Environment> currentRoom;
 	public:
 		Actor(std::string name);
 		virtual ~Actor() = default;
 		virtual void act() = 0;
 		bool isFinished() const;
-		void setCurrentRoom(std::shared_ptr<Environment> e);
+		void setCurrentRoom(std::weak_ptr<Environment> e);
 		std::string getName() const;
 	};
 }

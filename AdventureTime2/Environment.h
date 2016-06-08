@@ -13,9 +13,9 @@ namespace AdventureTime {
 	class Environment {
 	private: 
 		const int id;
-		std::unordered_map<std::string, std::shared_ptr<Environment>> directions; 
-		std::vector<std::shared_ptr<Item>> items;
-		std::vector<std::shared_ptr<Actor>> actors;
+		std::unordered_map<std::string, std::weak_ptr<Environment>> directions; 
+		std::vector<std::weak_ptr<Item>> items;
+		std::vector<std::weak_ptr<Actor>> actors;
 	protected:
 		static std::atomic<int> s_id;
 		std::string description;
@@ -23,18 +23,18 @@ namespace AdventureTime {
 		Environment(std::string && description);
 		virtual ~Environment() = default;
 		virtual std::string getDescription() const = 0;
-		void removeItem(std::shared_ptr<Item> item);
-		void addItem(std::shared_ptr<Item> item);
+		void removeItem(std::weak_ptr<Item> item);
+		void addItem(std::weak_ptr<Item> item);
 		int getID() const;
-		void addDirection(std::string s, std::shared_ptr<Environment> environment);
+		void addDirection(std::string s, std::weak_ptr<Environment> environment);
 		void printDirections() const;
-		std::vector<std::shared_ptr<Item>> getItems();
-		std::shared_ptr<Environment> getNextRoom(const std::string direction);
+		std::vector<std::weak_ptr<Item>> getItems();
+		std::weak_ptr<Environment> getNextRoom(const std::string direction);
 		bool hasDirection(const std::string direction) const;
-		std::vector<std::shared_ptr<Environment>> getNeighbors() const;
+		std::vector<std::weak_ptr<Environment>> getNeighbors() const;
 		std::vector<std::string> getDirections() const;
-		void addActor(std::shared_ptr<Actor> actor);
-		std::vector<std::shared_ptr<Actor>> getActors();
-		void removeActor(std::shared_ptr<Actor> actor);
+		void addActor(std::weak_ptr<Actor> actor);
+		std::vector<std::weak_ptr<Actor>> getActors();
+		void removeActor(std::weak_ptr<Actor> actor);
 	};
 }
