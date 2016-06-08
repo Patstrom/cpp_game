@@ -7,7 +7,9 @@
 #include "Environment.h"
 
 namespace AdventureTime {
-	class Actor {
+	class Actor :
+		public std::enable_shared_from_this<Actor>
+	{
 	protected:
 		std::string name;
 		bool finished;

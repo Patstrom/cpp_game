@@ -27,7 +27,7 @@ AdventureTime::Game::Game()
 	/*Player * player = dynamic_cast<Player*>(&(*actors[0]));
 
 	player->setCurrentRoom(environments[0]);*/
-	for (auto a : actors) {
+	for (std::shared_ptr<Actor> a : actors) {
 		a->setCurrentRoom(environments[0]);
 	}
 
@@ -51,13 +51,12 @@ void AdventureTime::Game::play()
 	bool finished = false;
 
 	while (!finished) {
-		std::cout << "Amount of actors: " << actors.size() << std::endl;
-		for (auto actor : actors)
+		for (std::shared_ptr<Actor> actor : actors)
 		{
-			std::cout << actor->getName() << "START" << std::endl;
 			actor->act();
-			std::cout << actor->getName() << "END" << std::endl;
 			finished = actor->isFinished();
+			if (finished)
+				break;
 		}
 		time++;
 	}

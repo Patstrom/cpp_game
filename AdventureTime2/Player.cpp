@@ -51,12 +51,12 @@ void AdventureTime::Player::unequip(std::shared_ptr<AdventureTime::Item> item) {
 void AdventureTime::Player::printLocationDetails() const {
 	std::cout << "[Location] " << currentRoom->getDescription() << "\n";
 	std::cout << "[Items] ";
-	for (auto i : currentRoom->getItems())
+	for (std::shared_ptr<Item> i : currentRoom->getItems())
 			std::cout << i->getType() << ", ";
 	std::cout << "\n";
 	if (currentRoom->getActors().size() != 0) {
 		std::cout << "[Characters] ";
-		for (auto a : currentRoom->getActors())
+		for (std::shared_ptr<Actor> a : currentRoom->getActors())
 			std::cout << a->getName() << ", ";
 		std::cout << "\n";
 	}
@@ -98,7 +98,7 @@ bool AdventureTime::Player::goToRoom(const Command & c)
 			setCurrentRoom(nextRoom);
 			return true;
 		}
-		auto key = lockedRoom->getItemId();
+		int key = lockedRoom->getItemId();
 		std::vector<std::shared_ptr<AdventureTime::Item>> items;
 		if (lockedRoom->needsEquipped()) {
 			items = getEquipped();
@@ -129,17 +129,17 @@ bool AdventureTime::Player::goToRoom(const Command & c)
 }
 
 void AdventureTime::Player::pickUp(const Command & c) {
-	auto nearbyItems = currentRoom->getItems();
+	std::vector<std::shared_ptr<Item>> nearbyItems = currentRoom->getItems();
 
 	if (!c.hasSecondWord()) {
 		std::cout << "pick up what?\n";
-		for (auto i : nearbyItems)
+		for (std::shared_ptr<Item> i : nearbyItems)
 			std::cout << i->getType() << " ";
 		return;
 	}
 
 	const std::string type = c.getSecondWord();
-	for (auto i : nearbyItems) {
+	for (std::shared_ptr<Item> i : nearbyItems) {
 		if (i->getType().compare(type) == 0) {
 			addItem(i);
 			std::cout << i->getDescription();
@@ -152,14 +152,14 @@ void AdventureTime::Player::pickUp(const Command & c) {
 void AdventureTime::Player::useItem(const Command & c) {	
 	if (!c.hasSecondWord()) {
 		std::cout << "Use what item?\n";
-		for (auto i : inventory) {
+		for (std::shared_ptr<Item> i : inventory) {
 			std::cout << i->getType() << ", ";
 		}
 		return;
 	}
 
 	std::string type = c.getSecondWord();
-	for (auto i : inventory) {
+	for (std::shared_ptr<Item> i : inventory) {
 		if (i->getType().compare(type) == 0) {
 			// TODO: How to do this now???
 			if (i->getId() == 3/* && currentRoom == 1*/) {
@@ -175,7 +175,7 @@ void AdventureTime::Player::useItem(const Command & c) {
 void AdventureTime::Player::equipItem(const Command & c) {
 	if (!c.hasSecondWord()) {
 		std::cout << "Which item?\n";
-		for (auto i : inventory) {
+		for (std::shared_ptr<Item> i : inventory) {
 			if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
 				//std::cout << i->getType() << " ";
 				std::cout << wearableItem->getType() << ", ";
@@ -185,7 +185,7 @@ void AdventureTime::Player::equipItem(const Command & c) {
 	}
 
 	std::string type = c.getSecondWord();
-	for (auto i : inventory) {
+	for (std::shared_ptr<Item> i : inventory) {
 		if (dynamic_cast<Wearable*>(&*i)) {
 			equip(i);
 			std::cout << "Successfully equipped!";
@@ -196,13 +196,13 @@ void AdventureTime::Player::equipItem(const Command & c) {
 }
 
 void AdventureTime::Player::showInventory() const {
-	for (auto t : inventory) {
+	for (std::shared_ptr<Item> t : inventory) {
 		std::cout << t->getType() << ", ";
 	}
 }
 
 void AdventureTime::Player::showEquipped() const {
-	for (auto t : equipped) {
+	for (std::shared_ptr<Item> t : equipped) {
 		std::cout << t->getType() << ", ";
 	}
 }

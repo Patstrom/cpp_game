@@ -27,11 +27,12 @@ namespace AdventureTime {
 		void addItem(std::shared_ptr<Item> item);
 		int getID() const;
 		void addDirection(std::string s, std::shared_ptr<Environment> environment);
-		void printDirections();
+		void printDirections() const;
 		std::vector<std::shared_ptr<Item>> getItems();
 		std::shared_ptr<Environment> getNextRoom(const std::string direction);
 		bool hasDirection(const std::string direction) const;
-		std::vector<std::shared_ptr<Environment>> getNeighbors();
+		std::vector<std::shared_ptr<Environment>> getNeighbors() const;
+		std::vector<std::string> getDirections() const;
 		void addActor(std::shared_ptr<Actor> actor);
 		std::vector<std::shared_ptr<Actor>> getActors();
 		void removeActor(std::shared_ptr<Actor> actor);

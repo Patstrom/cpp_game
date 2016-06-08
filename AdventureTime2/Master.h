@@ -12,7 +12,7 @@ namespace AdventureTime {
 		const int WALK = 0;
 	public:
 		Master();
-		~Master() = default;
+		virtual ~Master() = default;
 		virtual void act();
 	};
 }

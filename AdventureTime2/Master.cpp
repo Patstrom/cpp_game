@@ -10,7 +10,7 @@ void AdventureTime::Master::act() {
 	int i = (std::rand() % 3);
 	if (i == WALK) {
 		std::vector<std::shared_ptr<Environment>> neighbors = currentRoom->getNeighbors();
-		auto nextRoom = neighbors[(std::rand() % neighbors.size())];
+		std::shared_ptr<Environment> nextRoom = neighbors[(std::rand() % neighbors.size())];
 		setCurrentRoom(nextRoom);
 	} else { // Do nothing
 

@@ -33,7 +33,7 @@ namespace AdventureTime {
 		void printLocationDetails() const;
 	public:
 		Player();
-		~Player() = default;
+		virtual ~Player() = default;
 		virtual void act();
 	};
 }

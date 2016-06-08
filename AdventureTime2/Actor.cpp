@@ -12,7 +12,7 @@ bool AdventureTime::Actor::isFinished() const {
 
 void AdventureTime::Actor::setCurrentRoom(std::shared_ptr<AdventureTime::Environment> e)
 {
-	std::shared_ptr<Actor> actor_ptr(this);
+	std::shared_ptr<Actor> actor_ptr = shared_from_this();
 	e->addActor(actor_ptr);
 	if (currentRoom != 0)
 		currentRoom->removeActor(actor_ptr);

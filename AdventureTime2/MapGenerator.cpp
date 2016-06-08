@@ -27,6 +27,7 @@ std::vector<std::shared_ptr<AdventureTime::Environment>> AdventureTime::MapGener
 
 	parkingLot->addDirection("north", apartment);
 	parkingLot->addDirection("south", park);
+	parkingLot->addDirection("east", park);
 
 	lake->addDirection("north", park);
 
@@ -71,8 +72,8 @@ std::vector<std::shared_ptr<AdventureTime::Item>> AdventureTime::MapGenerator::g
 std::vector<std::shared_ptr<AdventureTime::Actor>> AdventureTime::MapGenerator::generate_actors()
 {
 	std::vector<std::shared_ptr<Actor>> tmpList;
-	std::shared_ptr<Player> player(new Player());
-	std::shared_ptr<Master> master(new Master());
+	std::shared_ptr<Actor> player(new Player());
+	std::shared_ptr<Actor> master(new Master());
 	tmpList.push_back(player);
 	tmpList.push_back(master);
 	return tmpList;
