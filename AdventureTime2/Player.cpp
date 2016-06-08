@@ -162,7 +162,7 @@ void AdventureTime::Player::useItem(const Command & c) {
 	for (std::shared_ptr<Item> i : inventory) {
 		if (i->getType().compare(type) == 0) {
 			// TODO: How to do this now???
-			if (i->getId() == 3/* && currentRoom == 1*/) {
+			if (i->getId() == 3 && currentRoom->getActors().size() > 1) {
 				std::cout << "Master is happy! Huge success!";
 				getchar();
 				exit(0);
@@ -177,7 +177,6 @@ void AdventureTime::Player::equipItem(const Command & c) {
 		std::cout << "Which item?\n";
 		for (std::shared_ptr<Item> i : inventory) {
 			if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
-				//std::cout << i->getType() << " ";
 				std::cout << wearableItem->getType() << ", ";
 			}
 		}
