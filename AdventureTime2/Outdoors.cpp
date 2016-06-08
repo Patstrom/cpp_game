@@ -1,5 +1,4 @@
-#pragma once
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "Outdoors.h"
 
 
@@ -20,7 +19,7 @@ std::string AdventureTime::Outdoors::getDescription() const {
 	if (std::rand() % 100 < chance_of_rain) {
 		std::string temp;
 		temp.append(description);
-		temp.append(std::string("\n\nIt is raining D:"));
+		temp.append(std::string("\nIt is raining D:"));
 		return temp;
 	}
 	else {

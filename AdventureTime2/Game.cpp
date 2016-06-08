@@ -1,215 +1,47 @@
-#pragma once	
 #include "Game.h"
-#include "Locked.h"
-#include "Wearable.h"
 
-void AdventureTime::Game::goToRoom(const Command & c)
-{
-	if (!c.hasSecondWord()) {
-		std::cout << "Where to?\n";
-		findRoom(player.getCurrentRoom()).printDirections();
-		return;
-	}
-
-	const std::string direction = c.getSecondWord();
-	if (direction.compare("north") &&
-		direction.compare("south") &&
-		direction.compare("west") &&
-		direction.compare("east")) {
-		std::cout << "Invalid direction!\n";
-		return;
-	}
-
-	int nextRoomId = findRoom(player.getCurrentRoom()).getNextRoom(direction);
-	Environment & nextRoom = findRoom(nextRoomId);
-	//If room is locked
-	if (Locked * lockedRoom = dynamic_cast<Locked*>(&nextRoom)) {
-		if (lockedRoom->isUnlocked()) {
-			player.setCurrentRoom(nextRoomId);
-			std::cout << nextRoom.getDescription();
-			return;
-		}
-		auto key = lockedRoom->getItemId();
-		std::vector<std::shared_ptr<Item>> items;
-		if (lockedRoom->needsEquipped()) {
-			items = findItems(player.getEquipped());
-		}
-		else {
-			items = findItems(player.getItems());
-		}
-		for (auto it = items.begin(); it != items.end(); it++) {
-			if ((*it)->getId() == key){
-				player.setCurrentRoom(nextRoomId);
-				lockedRoom->unlock();
-				if (lockedRoom->needsEquipped()) {
-					player.unequip(key);
-				}
-				else {
-					player.removeItem(key);
-				}
-				std::cout << nextRoom.getDescription();
-				return;
-			}
-		}
-		std::cout << "Oh no, you are missing the item required to enter";
-	}
-	//If room isn't unlocked
-	else {
-		player.setCurrentRoom(nextRoomId);
-		std::cout << nextRoom.getDescription();
-	}
-}
-
-AdventureTime::Environment & AdventureTime::Game::findRoom(int ID)
+AdventureTime::Environment & AdventureTime::Game::findRoom(int ID) const
 {
 	for (auto it = environments.begin(); it != environments.end(); it++) {
 		if ((*it)->getID() == ID)
 			return **it;
 	}
+	//If here, ID isnt a valid room id
 }
 
-void AdventureTime::Game::pickUp(const Command & c) {
-	Environment & currentRoom = findRoom(player.getCurrentRoom());
-	auto nearbyItems = findItems(currentRoom.getItems());
-
-	if (!c.hasSecondWord()) {
-		std::cout << "pick up what?\n";
-		for (auto i : nearbyItems)
-			std::cout << i->getType() << " ";
-		return;
-	}
-
-	const std::string type = c.getSecondWord();
-	for (auto i : nearbyItems) {
-		if (i->getType().compare(type) == 0) {
-			player.addItem(i->getId());
-			std::cout << i->getDescription();
-			currentRoom.removeItem(i->getId());
-			break;
-		}
-	}
-}
-
-std::vector<std::shared_ptr<AdventureTime::Item>> AdventureTime::Game::findItems(std::vector<int> list) {
-	std::vector<std::shared_ptr<Item>> tempList;
+std::shared_ptr<AdventureTime::Item> AdventureTime::Game::findItem(int ID) const {
 
 	for (auto i = items.begin(); i != items.end(); i++) {
-		for (auto j = list.begin(); j != list.end(); j++) {
-			if ((*i)->getId() == *j) {
-				tempList.push_back(*i);
-			}
+		if ((*i)->getId() == ID) {
+			return *i;
 		}
 	}
-	return tempList;
-}
-
-void AdventureTime::Game::useItem(const Command & c) {
-	auto inventory = findItems(player.getItems());
-	
-	if (!c.hasSecondWord()) {
-		std::cout << "Use what item?\n";
-		for (auto i : inventory) {
-			std::cout << i->getType() << " ";
-		}
-		return;
-	}
-
-	std::string type = c.getSecondWord();
-	for (auto i : inventory) {
-		if (i->getType().compare(type) == 0) {
-			if (i->getId() == 3 && player.getCurrentRoom() == 1) {
-				std::cout << "Master is happy! Huge success!";
-				getchar();
-				exit(0);
-			}
-			i->use();
-		}
-	}
-}
-
-void AdventureTime::Game::equipItem(const Command & c) {
-	auto inventory = findItems(player.getItems());
-
-	if (!c.hasSecondWord()) {
-		std::cout << "Which item?\n";
-		for (auto i : inventory) {
-			if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
-				std::cout << i->getType() << " ";
-			}
-		}
-		return;
-	}
-
-	std::string type = c.getSecondWord();
-	for (auto i : inventory) {
-		if (Wearable * wearableItem = dynamic_cast<Wearable*>(&*i)) {
-			int id = wearableItem->getId();
-			player.equip(id);
-			std::cout << "Successfully equipped!";
-			return;
-		}
-	}
-
-}
-
-bool AdventureTime::Game::processCommand(const Command & c)
-{
-	if (c.isUnknown()) {
-		std::cout << "Command does not exist";
-		return false;
-	}
-
-	const std::string commandWord = c.getCommandWord();
-	if (commandWord.compare("help") == 0) {
-		std::cout << "Available commands: \n";
-		parser.showCommands();
-		return false;
-	}
-	else if (commandWord.compare("go") == 0) {
-		goToRoom(c);
-		return false;
-	}
-	else if (commandWord.compare("pick") == 0) {
-		pickUp(c);
-	}
-	else if (commandWord.compare("use") == 0) {
-		useItem(c);
-	}
-	else if (commandWord.compare("equip") == 0) {
-		equipItem(c);
-	}
-	else if (commandWord.compare("inventory") == 0) {
-		auto tmp = findItems(player.getItems());
-		for (auto t : tmp) {
-			std::cout << t->getType() << " ";
-		}
-	}
-	else if (commandWord.compare("equipped") == 0) {
-		auto tmp = findItems(player.getEquipped());
-		for (auto t : tmp) {
-			std::cout << t->getType() << " ";
-		}
-	}
-	else if (commandWord.compare("quit") == 0) {
-		std::cout << "Thank you come again!";
-		return true;
-	}
-
-	return false; //Command not registered
 }
 
 AdventureTime::Game::Game()
 {
 	environments = mg.generate_environments();
 	items = mg.generate_items();
+	actors = mg.generate_actors();
 
-	findRoom(3).addItem(1); //Add mask to lake
-	findRoom(4).addItem(2); //Add key to cafe
-	findRoom(5).addItem(3); //Add stick to apartment
-	findRoom(2).addItem(4); //Add ball to parkingLot
-	findRoom(2).addItem(5); //Add the other ball to parkingLot
+	/*Player * player = dynamic_cast<Player*>(&(*actors[0]));
 
-	std::cout << "Welcome to game!\n\n" << findRoom(player.getCurrentRoom()).getDescription() << "\n";
+	player->setCurrentRoom(environments[0]);*/
+	for (auto a : actors) {
+		a->setCurrentRoom(environments[0]);
+	}
+
+
+	findRoom(3).addItem(findItem(1)); //Add mask to lake
+	findRoom(4).addItem(findItem(2)); //Add key to cafe
+	findRoom(5).addItem(findItem(3)); //Add stick to apartment
+	findRoom(2).addItem(findItem(4)); //Add ball to parkingLot
+	findRoom(2).addItem(findItem(5)); //Add the other ball to parkingLot
+
+	std::cout << "Welcome to game!\n"; 
+	std::cout << "You are a dog... [etc]\n";
+
+	time = 0;
 }
 
 
@@ -217,13 +49,17 @@ AdventureTime::Game::Game()
 void AdventureTime::Game::play()
 {
 	bool finished = false;
+
 	while (!finished) {
-		std::cout << ">"; //Prompt
-
-		Command c = parser.getCommand();
-		finished = processCommand(c);
-
-		std::cout << "\n";
+		std::cout << "Amount of actors: " << actors.size() << std::endl;
+		for (auto actor : actors)
+		{
+			std::cout << actor->getName() << "START" << std::endl;
+			actor->act();
+			std::cout << actor->getName() << "END" << std::endl;
+			finished = actor->isFinished();
+		}
+		time++;
 	}
 }
 

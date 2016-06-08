@@ -1,5 +1,4 @@
-#pragma once
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "Indoors.h"
 
 AdventureTime::Indoors::Indoors(std::string && description, int itemId, bool equipped) : 
